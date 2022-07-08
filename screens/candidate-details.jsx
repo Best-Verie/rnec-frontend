@@ -4,38 +4,38 @@ import {useState} from "react"
 import { Button } from "../components/theme/button";
 import { validate } from "../utils/validator";
 import { Colors } from "../utils/constants";
-import { post } from "../utils/http";
-import { Alert, Image, TouchableOpacity, View } from "react-native";
+import { put } from "../utils/http";
+import { Alert, Image, TouchableOpacity, View , StyleSheet} from "react-native";
 
 export default function CandidateDetails({ navigation, route }) {
 	let item = route.params.item;
-    const [voterId, setVoterId] = useState("");
 	const [candidate, setCandidate] = useState("");
 
 	async function voteHandler() {
-		let data = { voterId, candidate };
+	try {
 
-		let [passes, info] = validate(data, {
-			voterId: "required",
-			candidate: "required",
-		});
-		// setVoterId()
-		setCandidate(item._id)
-
-		if (!passes) {
-			Alert.alert("Bad Request", info[0][0]);
-			return;
-		}
- 
-		console.log("fb")
+			await put(`api/v1/candidates/vote/${item._id}`);
+			Alert.alert("Success", "Voting Successful");
+			navigation.navigate("Candidates");
+		} catch (error) {
+			if (error.status == 400) {
+				Alert.alert(
+					"Bad Request",
+					Object.values(error.response.data)[0][0]
+				);
+			} else {
+				Alert.alert("Failed!", "Can't vote Again");
+			}
+		}	
 	}
 	return (
 		<Screen>
-			<Image
-        style={styles.tinyLogo}
-        source={uri(item.profileUrl)}
+		<Image
+          style={{width: '100%', height: '50%'}}
+          source={{uri:item.profileUrl}}
       />
-			<Text size={22} bold>
+
+			<Text size={22} bold styles={{ marginTop: 20 }}>
 				{item.names}
 			</Text>
 			<Text size={16} styles={{ marginTop: 20 }}>
@@ -61,8 +61,8 @@ const styles = StyleSheet.create({
     paddingTop: 50,
   },
   tinyLogo: {
-    width: 50,
-    height: 50,
+    width: 100,
+    height: 100,
   },
   logo: {
     width: 66,

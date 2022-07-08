@@ -15,7 +15,7 @@ export default function RegisterScreen({ navigation }) {
 	const [email, setEmail] = useState("");
 	const [nationalId, setNationalId] = useState("");
 	const [phone, setPhone] = useState("");
-	const role = "STANDARD"
+	const role = "Standard"
 
 
 	async function register() {
@@ -36,8 +36,9 @@ export default function RegisterScreen({ navigation }) {
 
 		try {
 			await post("api/v1/users", data);
-
 			Alert.alert("Success", "Registration Successful");
+			console.log(resp)
+			// const datsa = res.
 			navigation.navigate("Login");
 		} catch (error) {
 			console.log(error.response.data);
@@ -53,12 +54,12 @@ export default function RegisterScreen({ navigation }) {
 				}}
 			>
 				<Text size={30} medium align="center" color={Colors.primary}>
-					Hello. have an account
+					Hello. Create an account!
 				</Text>
 			</View>
 			<View style={{ marginTop: 30 }}>
-				<Input label="name" handler={setName} />
-				<Input label="nationalId" handler={setNationalId} />
+				<Input label="Name" handler={setName} />
+				<Input label="NationalId" handler={setNationalId} />
 				<Input label="Email" handler={setEmail} />
 				<Input label="Phone" handler={setPhone}  />
 				<Input label="Addresss" handler={setAddress}  />

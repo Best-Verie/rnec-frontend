@@ -29,6 +29,7 @@ export default function LoginScreen({ navigation }) {
 
 		try {
 			let res = await post("api/v1/auth", data);
+			console.log(res.data)
 			await SecureStore.setItemAsync("token", res.data.token);
 			Alert.alert("Success", "Login Successful");
 			

@@ -15,19 +15,19 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Colors } from "../utils/constants";
 
 export function Candidates({ navigation }) {
-	const [articles, setArticles] = useState([]);
+	const [candidates, setCandidates] = useState([]);
 	const [isFetching, setIsFetching] = useState(false);
 
-	async function getArticles() {
+	async function getCandidates() {
 		setIsFetching(true);
 		let response = await get("api/v1/candidates");
 
-		setArticles(response.data.data.reverse(0));
+		setCandidates(response.data.data.reverse(0));
 		setIsFetching(false);
 	}
 
 	useEffect(() => {
-		getArticles();
+		getCandidates();
 	}, []);
 
 	return (
@@ -47,9 +47,9 @@ export function Candidates({ navigation }) {
 						refreshing={isFetching}
 						style={{ height: 40 }}
 						showsVerticalScrollIndicator={false}
-						data={articles}
+						data={candidates}
 						renderItem={renderCandidate(navigation)}
-						onRefresh={getArticles}
+						onRefresh={getCandidates}
 						ListFooterComponent={() => (
 							<View
 								style={{
