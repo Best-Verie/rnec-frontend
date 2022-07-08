@@ -33,7 +33,7 @@ export function Input({
 							paddingVertical: 5,
 							paddingHorizontal: 20,
 							borderWidth: 2,
-							borderRadius: 2,
+							borderRadius: 4,
 							color: Colors.text,
 							height,
 							paddingTop: 10,
@@ -60,7 +60,7 @@ export function Input({
 							paddingVertical: 5,
 							paddingHorizontal: 20,
 							borderWidth: 2,
-							borderRadius: 2,
+							borderRadius: 4,
 							color: Colors.text,
 						},
 						isFocused

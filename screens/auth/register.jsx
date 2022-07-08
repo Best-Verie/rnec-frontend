@@ -10,19 +10,23 @@ import { post } from "../../utils/http";
 import { validate } from "../../utils/validator";
 
 export default function RegisterScreen({ navigation }) {
-	const [names, setFullNames] = useState("");
-	const [username, setUsername] = useState("");
+	const [name, setName] = useState("");
+	const [address, setAddress] = useState("");
 	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
+	const [nationalId, setNationalId] = useState("");
+	const [phone, setPhone] = useState("");
+	const role = "STANDARD"
+
 
 	async function register() {
-		let data = { names, username, email, password };
+		let data = { name,  email, nationalId, phone,address , role};
 
 		let [passes, info] = validate(data, {
-			names: "required",
-			username: "required",
+			name: "required",
 			email: "required|email",
-			password: "required",
+			nationalId: "required",
+			phone: "required",
+			address: "required",
 		});
 
 		if (!passes) {
@@ -31,7 +35,7 @@ export default function RegisterScreen({ navigation }) {
 		}
 
 		try {
-			await post("api/auth/register", data);
+			await post("api/v1/users", data);
 
 			Alert.alert("Success", "Registration Successful");
 			navigation.navigate("Login");
@@ -53,10 +57,12 @@ export default function RegisterScreen({ navigation }) {
 				</Text>
 			</View>
 			<View style={{ marginTop: 30 }}>
-				<Input label="Full names" handler={setFullNames} />
+				<Input label="name" handler={setName} />
+				<Input label="nationalId" handler={setNationalId} />
 				<Input label="Email" handler={setEmail} />
-				<Input label="username" handler={setUsername} />
-				<Input label="Password" handler={setPassword} password />
+				<Input label="Phone" handler={setPhone}  />
+				<Input label="Addresss" handler={setAddress}  />
+
 			</View>
 			<Button title="Create" onPress={register} />
 			<View>

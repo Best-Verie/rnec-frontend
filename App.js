@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { Articles } from "./screens/articles";
+import { candidates } from "./screens/candidates";
 
 import {
 	useFonts,

@@ -12,14 +12,14 @@ import * as SecureStore from "expo-secure-store";
 
 export default function LoginScreen({ navigation }) {
 	const [email, setLogin] = useState("");
-	const [password, setPassword] = useState("");
+	const [nationalId, setNationalId] = useState("");
 
 	async function loginHandler() {
-		let data = { email, password };
+		let data = { email, nationalId };
 
 		let [passes, info] = validate(data, {
 			email: "required",
-			password: "required",
+			nationalId: "required",
 		});
 
 		if (!passes) {
@@ -28,10 +28,10 @@ export default function LoginScreen({ navigation }) {
 		}
 
 		try {
-			let res = await post("api/auth/login", data);
-
+			let res = await post("api/v1/auth", data);
 			await SecureStore.setItemAsync("token", res.data.token);
 			Alert.alert("Success", "Login Successful");
+			
 			navigation.navigate("App");
 		} catch (error) {
 			if (error.response.status == 400) {
@@ -58,7 +58,7 @@ export default function LoginScreen({ navigation }) {
 			</View>
 			<View style={{ marginTop: 30 }}>
 				<Input label="Email or username" handler={setLogin} />
-				<Input label="Password" handler={setPassword} password />
+				<Input label="National Id" handler={setNationalId}  />
 			</View>
 			<Button title="Login" onPress={loginHandler} />
 			<View>

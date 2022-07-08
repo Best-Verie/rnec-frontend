@@ -2,12 +2,12 @@ import { TouchableOpacity, View } from "react-native";
 import { Colors } from "../../utils/constants";
 import Text from "../theme/text";
 
-export function renderArticle(navigation) {
+export function renderCandidate(navigation) {
 	return function ({ item, index, separators }) {
 		return (
 			<TouchableOpacity
 				onPress={() => {
-					navigation.navigate("ArticleDetails", {
+					navigation.navigate("CandidateDetails", {
 						item,
 					});
 				}}
@@ -19,13 +19,13 @@ export function renderArticle(navigation) {
 						paddingVertical: 20,
 					}}
 				>
-					<Text bold>{item.title}</Text>
+					<Text bold>{item.names}</Text>
 					<Text
 						styles={{
 							marginTop: 20,
 						}}
 					>
-						{item.summary}
+						{item.missionStatement}
 					</Text>
 					<Text
 						size={15}
@@ -35,7 +35,7 @@ export function renderArticle(navigation) {
 							marginTop: 20,
 						}}
 					>
-						By {item._id}
+						votes:  {item.votes}
 					</Text>
 				</View>
 			</TouchableOpacity>

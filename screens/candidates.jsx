@@ -6,7 +6,7 @@ import {
 	TouchableOpacity,
 	View,
 } from "react-native";
-import { renderArticle } from "../components/atoms/article";
+import { renderCandidate } from "../components/atoms/article";
 import Text from "../components/theme/text";
 import { Screen } from "../layouts/screen";
 import { get } from "../utils/http";
@@ -14,15 +14,15 @@ import { get } from "../utils/http";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Colors } from "../utils/constants";
 
-export function Articles({ navigation }) {
+export function Candidates({ navigation }) {
 	const [articles, setArticles] = useState([]);
 	const [isFetching, setIsFetching] = useState(false);
 
 	async function getArticles() {
 		setIsFetching(true);
-		let data = await get("api/articles");
+		let response = await get("api/v1/candidates");
 
-		setArticles(data.data.reverse(0));
+		setArticles(response.data.data.reverse(0));
 		setIsFetching(false);
 	}
 
@@ -48,7 +48,7 @@ export function Articles({ navigation }) {
 						style={{ height: 40 }}
 						showsVerticalScrollIndicator={false}
 						data={articles}
-						renderItem={renderArticle(navigation)}
+						renderItem={renderCandidate(navigation)}
 						onRefresh={getArticles}
 						ListFooterComponent={() => (
 							<View
@@ -57,13 +57,13 @@ export function Articles({ navigation }) {
 									justifyContent: "center",
 								}}
 							>
-								<Text align="center">No more articles</Text>
+								<Text align="center">No more candidates</Text>
 							</View>
 						)}
 					/>
 				</View>
 			</View>
-			<View
+			{/* <View
 				style={{
 					backgroundColor: Colors.primary,
 					width: 50,
@@ -88,7 +88,7 @@ export function Articles({ navigation }) {
 				>
 					<MaterialIcons name="add" size={30} color="white" />
 				</TouchableOpacity>
-			</View>
+			</View> */}
 		</Screen>
 	);
 }

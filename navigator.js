@@ -3,15 +3,15 @@ import {
 	CardStyleInterpolators,
 } from "@react-navigation/stack";
 import { Text, View } from "react-native";
-import ArticleDetails from "./screens/article-details";
-import { Articles } from "./screens/articles";
+import CandidateDetails from "./screens/candidate-details";
+import { Candidates } from "./screens/candidates";
+import { Colors } from "./utils/constants";
 
 import { Ionicons } from "@expo/vector-icons";
 import LoginScreen from "./screens/auth/login";
 import RegisterScreen from "./screens/auth/register";
 import React, { useContext } from "react";
 import { AppContext } from "./contexts/app-context";
-import NewArticle from "./screens/new-article";
 import { LoadingScreen } from "./screens/loading";
 
 export const RootNavigator = () => {
@@ -51,7 +51,6 @@ const Stack = createStackNavigator();
 
 function AppNavigator({ navigation }) {
 	navigation.addListener("beforeRemove", (e) => {
-		// console.log("Yello no thing 1");
 		e.preventDefault();
 	});
 
@@ -62,7 +61,7 @@ function AppNavigator({ navigation }) {
 				gestureDirection: "horizontal",
 				cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
 				headerStyle: {
-					backgroundColor: "dodgerblue",
+					backgroundColor: Colors.primary,
 				},
 
 				headerTitleStyle: {
@@ -76,20 +75,19 @@ function AppNavigator({ navigation }) {
 			}}
 		>
 			<Stack.Screen
-				name="Articles"
-				component={Articles}
+				name="Candidates"
+				component={Candidates}
 				options={{
 					headerLeft: null,
 					gestureEnabled: false,
 				}}
 			/>
-			<Stack.Screen name="NewArticle" component={NewArticle} />
 			<Stack.Screen
-				name="ArticleDetails"
+				name="CandidateDetails"
 				options={({ route }) => ({
-					title: `Reading ${route.params.item.title}`,
+					title: `Candidate ${route.params.item.names}`,
 				})}
-				component={ArticleDetails}
+				component={CandidateDetails}
 			/>
 		</Stack.Navigator>
 	);
